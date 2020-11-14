@@ -11,10 +11,10 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/userProfile">Profile <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/deliveryInfo">Delivery</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/deliveryInfo">Text</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/FAQ">FAQ</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/FAQ">Videos</a>
             </li>
         </ul>
         <ul class="nav justify-content-end">
