@@ -1,6 +1,9 @@
 package ru.itis.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.itis.models.User;
 
 import java.util.List;

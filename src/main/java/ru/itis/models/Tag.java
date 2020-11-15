@@ -10,4 +10,6 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Tag {
+    private Long postId;
+    private String tag;
 }

@@ -1,21 +1,24 @@
 package ru.itis.models;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+@Data
 @Builder
 @EqualsAndHashCode
-@Getter
 @ToString
 public class Post {
-    private String post;
+    private Long id;
+    private String postText;
     private Date data;
     private String userName;
     private String category;
-    private List<Tag> tagsList;
+    private ArrayList<String> tagsList;
+    private String fileName;
+    private String type;
 
 }

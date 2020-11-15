@@ -1,4 +1,5 @@
 package ru.itis.servlets;
+import org.springframework.context.ApplicationContext;
 import ru.itis.dto.UserForm;
 import ru.itis.services.SignUpService;
 
@@ -19,7 +20,8 @@ public class SignUpServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         ServletContext servletContext = config.getServletContext();
-        signUpService = (SignUpService) servletContext.getAttribute("signUpService");
+        ApplicationContext applicationContext = (ApplicationContext) servletContext.getAttribute("applicationContext");
+        signUpService = applicationContext.getBean(SignUpService.class);
     }
 
     @Override
