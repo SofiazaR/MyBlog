@@ -63,11 +63,11 @@ public class PostRepositoryJdbcTemplateImpl implements PostRepository {
 
     @Override
     public ArrayList<Post> findAll() {
-        List<Tag> tag = jdbcTemplate.query(SQL_SELECT_ALL_FROM_TAG, tagRowMapper);
+        List<Tag> tags = jdbcTemplate.query(SQL_SELECT_ALL_FROM_TAG, tagRowMapper);
 
         Map<Long, ArrayList<String>> postTags = new HashMap<>();
 
-        for (Tag row : tag) {
+        for (Tag row : tags) {
             ArrayList<String> list = postTags.get(row.getPostId());
             if (list == null) {
                 list = new ArrayList<>();
@@ -77,8 +77,7 @@ public class PostRepositoryJdbcTemplateImpl implements PostRepository {
         }
 
         ArrayList<Post> posts = (ArrayList<Post>) jdbcTemplate.query(SQL_SELECT_ALL_FROM_POST, postRowMapper);
-        for (Post post: posts
-             ) {
+        for (Post post : posts) {
             post.setTagsList(postTags.get(post.getId()));
         }
         return posts;

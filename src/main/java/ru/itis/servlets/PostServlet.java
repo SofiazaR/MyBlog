@@ -30,7 +30,11 @@ public class PostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ArrayList<Post> posts = postService.findAll();
-
+        for (Post post : posts
+        ) {
+            System.out.println(post.toString());
+        }
+        req.setAttribute("posts",posts);
         req.getRequestDispatcher("/WEB-INF/jsp/posts.jsp").forward(req, resp);
     }
 }

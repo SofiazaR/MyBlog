@@ -4,3 +4,4 @@
 /src/main/webapp/WEB-INF/properties/
 /src/main/schema.sql
 /src/main/resources/
+*.iml
