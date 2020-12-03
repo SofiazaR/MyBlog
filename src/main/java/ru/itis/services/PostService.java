@@ -1,9 +1,12 @@
 package ru.itis.services;
 
-import ru.itis.models.Post;
+import ru.itis.dto.PostDto;
+import ru.itis.models.User;
 
 import java.util.ArrayList;
 
 public interface PostService {
-    ArrayList<Post> findAll();
+    Long savePost(String postText,Long userId, String category, Long fileId);
+    ArrayList<PostDto> findAll();
+    ArrayList<PostDto> findAllByUser(User user);
 }

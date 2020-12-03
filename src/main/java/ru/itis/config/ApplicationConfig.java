@@ -9,10 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import ru.itis.repositories.PostRepository;
-import ru.itis.repositories.PostRepositoryJdbcTemplateImpl;
-import ru.itis.repositories.UsersRepository;
-import ru.itis.repositories.UsersRepositoryJdbcTemplateImpl;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import ru.itis.repositories.*;
 import ru.itis.services.*;
 
 import javax.sql.DataSource;
@@ -20,10 +18,26 @@ import javax.sql.DataSource;
 @Configuration
 @PropertySource("classpath:db.properties")
 @ComponentScan(basePackages = "ru.itis")
+
 public class ApplicationConfig {
 
     @Autowired
     private Environment environment;
+
+    @Bean
+    public TagRepository tagRepository() {
+        return new TagRepositoryImpl(dataSource());
+    }
+
+    @Bean
+    public TagService tagService() {
+        return new TagServiceImpl(tagRepository());
+    }
+
+    @Bean
+    public SimpleJdbcInsert simpleJdbcInsert() {
+        return new SimpleJdbcInsert(dataSource());
+    }
 
     @Bean
     public UsersService usersService() {
@@ -51,6 +65,16 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public FileService fileService() {
+        return new FileServiceImpl(fileRepository());
+    }
+
+    @Bean
+    public FileRepository fileRepository() {
+        return new FileRepositoryImpl(dataSource());
+    }
+
+    @Bean
     public PostRepository postRepository() {
         return new PostRepositoryJdbcTemplateImpl(dataSource());
     }
@@ -60,7 +84,7 @@ public class ApplicationConfig {
         return new HikariDataSource(hikariConfig());
     }
 
-    @Bean // создали bean с id = objectMapper
+    @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }

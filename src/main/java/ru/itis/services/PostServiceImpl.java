@@ -1,6 +1,8 @@
 package ru.itis.services;
 
+import ru.itis.dto.PostDto;
 import ru.itis.models.Post;
+import ru.itis.models.User;
 import ru.itis.repositories.PostRepository;
 
 import java.util.ArrayList;
@@ -13,7 +15,29 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ArrayList<Post> findAll() {
-        return postRepository.findAll();
+    public Long savePost(String postText,Long userId, String category, Long fileId) {
+        Post post = Post.builder()
+                .postText(postText)
+                .userId(userId)
+                .category(category)
+                .fileId(fileId)
+                .build();
+
+        postRepository.save(post);
+        return post.getId();
+
+    }
+
+
+
+
+    @Override
+    public ArrayList<PostDto> findAll() {
+        return (ArrayList<PostDto>) PostDto.from(postRepository.findAll());
+    }
+
+    @Override
+    public ArrayList<PostDto> findAllByUser(User user) {
+            return (ArrayList<PostDto>) PostDto.from(postRepository.findAllByUser(user.getUserName()));
     }
 }

@@ -37,6 +37,7 @@ public class SignUpServlet extends HttpServlet {
                 .userName(req.getParameter("name").trim())
                 .age(Integer.parseInt(req.getParameter("age").trim()))
                 .build();
+
         signUpService.signUp(userForm);
         resp.sendRedirect("/signIn");
     }

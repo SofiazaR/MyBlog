@@ -1,5 +1,6 @@
 package ru.itis.services;
 
+import ru.itis.dto.ChangePasswordForm;
 import ru.itis.dto.UserDto;
 import ru.itis.models.User;
 
@@ -13,4 +14,6 @@ public interface UsersService {
     void saveUser(Map<String, String> pool);
 
     Optional<User> findByEmail(String email);
+
+    Boolean changePassword(ChangePasswordForm changePasswordForm);
 }

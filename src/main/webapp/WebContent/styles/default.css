@@ -106,11 +106,14 @@ hr {
 
 /** HEADER */
 
-#header-wrapper {
+#header-wrapper-root {
     background: url(/WebContent/Images/bg.jpg) no-repeat center center;
     background-size: cover;
 }
-
+#header-wrapper-videos {
+    background: url(/WebContent/Images/travel.jpg) no-repeat center center;
+    background-size: cover;
+}
 #header {
     position: relative;
     overflow: hidden;
@@ -246,8 +249,7 @@ hr {
 }
 
 #content .post-title h2 {
-    margin: 0;
-    padding: 0;
+    color: rgba(0, 0, 0, 0.8);
 }
 
 
@@ -451,6 +453,14 @@ ul.style3 .first {
 
 .column4 {
     width: 270px;
+    float: left;
+}
+.co-video1{
+    width: 560px;
+    float: right;
+}
+.co-video2{
+    width: 560px;
     float: left;
 }
 

@@ -16,7 +16,7 @@
 <body>
 <jsp:include page="views/_navbar.jsp"></jsp:include>
 <div id="wrapper">
-    <div id="header-wrapper">
+    <div id="header-wrapper-root">
         <div id="header" class="container">
             <div id="logo">
                 <h1><a href="#">world</a></h1>
@@ -32,9 +32,9 @@
             <ul>
                 <li class="current_page_item"><a href="#" accesskey="1" title="">Home</a></li>
                 <li><a href="${pageContext.request.contextPath}/posts" accesskey="1" title="">Post</a></li>
-                <li><a href="#" accesskey="2" title="">Videos</a></li>
-                <li><a href="#" accesskey="3" title="">About Me</a></li>
-                <li><a href="#" accesskey="4" title="">Contact Me</a></li>
+                <li><a href="${pageContext.request.contextPath}/videos" accesskey="2" title="">Videos</a></li>
+                <li><a href="${pageContext.request.contextPath}/about" accesskey="3" title="">About Me</a></li>
+                <li><a href="${pageContext.request.contextPath}/contact" accesskey="4" title="">Contact Me</a></li>
             </ul>
         </div>
     </div>
@@ -53,10 +53,10 @@
             </div>
             <img src="WebContent/Images/food.jpg" width="270" height="270" alt=""/>
             <p>Ребяточки, две недели жила в одиночестве, так что напишу вам рецептики, которые полюбились:</p>
-            <p>🌿<a href="https://www.instagram.com/chto_gde_sofiko/" rel="nofollow">Суп с фрикадельками</a>🌿</p>
-            <p>🌿<a href="https://www.instagram.com/chto_gde_sofiko/" rel="nofollow">Крылышки в духовке</a>🌿</p>
-            <p>🌿<a href="https://www.instagram.com/chto_gde_sofiko/" rel="nofollow">Желе с фруктиками</a>🌿</p>
-            <p>🌿<a href="https://www.instagram.com/chto_gde_sofiko/" rel="nofollow">Сладкий бутер</a>🌿</p>
+            <p>🌿<a rel="nofollow">Суп с фрикадельками</a>🌿</p>
+            <p>🌿<a rel="nofollow">Крылышки в духовке</a>🌿</p>
+            <p>🌿<a rel="nofollow">Желе с фруктиками</a>🌿</p>
+            <p>🌿<a rel="nofollow">Сладкий бутер</a>🌿</p>
         </div>
         <div class="column3">
             <div class="title">

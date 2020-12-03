@@ -14,6 +14,8 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     //language=sql
     private static final String SQL_INSERT = "INSERT INTO \"user\" (user_name, age, email, hash_password) values (?,?,?,?)";
     private static final String SQL_SELECT_BY_EMAIL = "Select * from \"user\" where email=?";
+    private static final String SQL_SELECT_BY_ID = "select * from \"user\" where id=?";
+    private static final String SQL_CHANGE_PASSWORD_BY_ID = "update \"user\" set hash_password=? where id=?";
 
     private final RowMapper<User> userRowMapper = (row, rowNumber) -> User.builder()
             .id(row.getLong("id"))
@@ -38,7 +40,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
     @Override
     public void updatePassword(Long id, String hashPassword) {
-
+        jdbcTemplate.update(SQL_CHANGE_PASSWORD_BY_ID, hashPassword, id);
     }
 
     @Override
@@ -64,7 +66,11 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
     @Override
     public Optional<User> findById(Long id) {
-        return Optional.empty();
+        try {
+            return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, userRowMapper, id));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

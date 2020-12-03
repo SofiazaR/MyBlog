@@ -13,29 +13,93 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
-<body>
+<body>>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="views/_navbar.jsp"></jsp:include>
 <jsp:useBean id="posts" scope="request" type="java.util.List"/>
-<h3>Приветики, тут всякие написанные мною штуки, их даже можно почитать</h3>
-<div class="comments w-75 mx-auto" id="commentsList">
-    <h1>FROM JSP USERS</h1>
-    <div>
-        <table> 
-            <tr>
-                <th>ID</th>
-                <th>FIRST NAME</th>
-                <th>LAST NAME</th>
-            </tr>
 
-            <c:forEach items="${posts}" var="post">
-                <tr>
-                    <td>${post.id}</td>
-                    <td>${post.data}</td>
-                    <td>${post.userName}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </div>
+<form id="MyForm">
+    <h5>Search </h5>
+    <input id="comment" type="text" name="tags" placeholder="Введите тег в формате #тег">
+    <div class="btn btn-secondary" onclick="sendComment()">submit</div>
+
+</form>
+
+<div id="page" class="container">
+    <c:forEach items="${posts}" var="post">
+        <div class="column1">
+            <div class="title">
+                <h2>${post.id}</h2>
+                <h2>${post.data}</h2>
+                <h2>${post.userName}</h2>
+            </div>
+            <p class="mytext">${post.postText}</p>
+            <img src="../WebContent/Images/${post.file_name}.${post.type}" width="270" height="270" alt="img">
+        </div>
+    </c:forEach>
 </div>
+
+
 <jsp:include page="views/_footer.jsp"/>
+<script>
+    function renderTable(posts) {
+        let textCOM = '';
+        $('#page').empty();
+        let len = posts.length;
+        for (let i = 0; i < len; i++) {
+            let post = posts[i];
+            let {postText} = post;
+            let {id} = post;
+            let {data} = post;
+            var date = new Date(data);
+            let format = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
+            let {userName} = post;
+            let {file_name} = post;
+            let {type} = post;
+            textCOM += " <div class=\"column1\">\n" +
+                "            <div class=\"title\">\n" +
+                "                <h2>"+id+"</h2>\n" +
+                "                <h2>"+format+"</h2>\n" +
+                "                <h2>"+userName+"</h2>\n" +
+                "            </div>\n" +
+                "            <p class=\"mytext\">"+postText+"</p>\n" +
+                "            <img src=\"../WebContent/Images/"+file_name+"."+type+"\""+"width=\"270\" height=\"270\" alt=\"img\">\n" +
+                "        </div>" ;
+        }
+        $('#page').append(textCOM);
+    }
+
+    function sendComment() {
+        let comment = $('#comment').val();
+        if (comment) {
+            $('#comment').val('');
+        }
+        let data = {
+            userName: comment,
+        };
+
+        $.ajax({
+            type: "POST",
+
+            data: JSON.stringify(data),
+            success: (response) => {
+                console.log(response);
+                renderTable(response);
+            },
+            dataType: "json",
+            contentType: "application/json"
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+</script>
+
+<style>
+    .mytext {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+    }
+</style>

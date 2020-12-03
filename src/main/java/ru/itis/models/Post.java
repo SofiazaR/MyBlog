@@ -18,6 +18,8 @@ public class Post {
     private String userName;
     private String category;
     private ArrayList<String> tagsList;
+    private Long userId;
+    private Long fileId;
     private String fileName;
     private String type;
 

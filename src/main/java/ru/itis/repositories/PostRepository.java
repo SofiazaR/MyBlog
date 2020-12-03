@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface PostRepository extends CrudRepository<Post>{
 
-    List<Post> findAllByTag(String tag);
+    List<Post> findAllByUser(String user);
 }
