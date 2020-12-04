@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.util.Optional;
 
 public interface FileService {
-    Long saveFileToStorage(InputStream file, String originalFileName, String contentType, Long size);
+    Long saveFileToStorage(InputStream file, String originalName, String contentType, Long size);
     void writeFileFromStorage(Long fileId, OutputStream outputStream);
     Optional<FileInfo> getFileInfo(Long fileId);
 

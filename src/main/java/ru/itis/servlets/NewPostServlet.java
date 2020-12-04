@@ -49,7 +49,8 @@ public class NewPostServlet extends HttpServlet {
         HttpSession session = req.getSession(false);
         UserDto userDto = (UserDto) session.getAttribute("userDto");
 
-        Long postId = postService.savePost(req.getParameter("post_text"),
+        Long postId = postService.savePost(req.getParameter("text"),
+                req.getParameter("name"),
                 userDto.getId(),
                 req.getParameter("category"),
                 fileId);

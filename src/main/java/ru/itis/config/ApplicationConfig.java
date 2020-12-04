@@ -90,6 +90,12 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public VideosRepository videosRepository(){return new VideosRepositoryImpl(dataSource());}
+
+    @Bean
+    public VideosService videosService(){return new VideosServiceImpl(videosRepository());}
+
+    @Bean
     public HikariConfig hikariConfig() {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(environment.getProperty("db.url"));

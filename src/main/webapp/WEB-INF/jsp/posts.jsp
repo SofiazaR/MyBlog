@@ -34,7 +34,7 @@
                 <h2>${post.userName}</h2>
             </div>
             <p class="mytext">${post.postText}</p>
-            <img src="../WebContent/Images/${post.file_name}.${post.type}" width="270" height="270" alt="img">
+            <img src="${pageContext.request.contextPath}/file?id=${post.fileId}" width="270" height="270" alt="img">
         </div>
     </c:forEach>
 </div>
@@ -54,8 +54,7 @@
             var date = new Date(data);
             let format = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
             let {userName} = post;
-            let {file_name} = post;
-            let {type} = post;
+            let {fileId} = post;
             textCOM += " <div class=\"column1\">\n" +
                 "            <div class=\"title\">\n" +
                 "                <h2>"+id+"</h2>\n" +
@@ -63,7 +62,7 @@
                 "                <h2>"+userName+"</h2>\n" +
                 "            </div>\n" +
                 "            <p class=\"mytext\">"+postText+"</p>\n" +
-                "            <img src=\"../WebContent/Images/"+file_name+"."+type+"\""+"width=\"270\" height=\"270\" alt=\"img\">\n" +
+                "            <img src=\"/file?id="+fileId+"\""+"width=\"270\" height=\"270\" alt=\"img\">\n" +
                 "        </div>" ;
         }
         $('#page').append(textCOM);

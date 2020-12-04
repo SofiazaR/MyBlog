@@ -23,16 +23,16 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Long saveFileToStorage(InputStream file, String originalFileName, String contentType, Long size) {
+    public Long saveFileToStorage(InputStream file, String originalName, String contentType, Long size) {
         FileInfo fileInfo = FileInfo.builder()
-                .originalFileName(originalFileName)
-                .storageFileName(UUID.randomUUID())
+                .originalName(originalName)
+                .storageName(UUID.randomUUID())
                 .size(size)
                 .type(contentType)
                 .build();
 
         try {
-            Files.copy(file, Paths.get("/home/sofiana/Desktop/MyBlog/src/main/webapp/WebContent/Images/" + fileInfo.getStorageFileName() + "." + fileInfo.getType().split("/")[1]));
+            Files.copy(file, Paths.get("/home/sofiana/Desktop/MyBlog/Images/" + fileInfo.getStorageName() + "." + fileInfo.getType().split("/")[1]));
             fileRepository.save(fileInfo);
             return fileInfo.getId();
 
@@ -45,10 +45,8 @@ public class FileServiceImpl implements FileService {
     @Override
     public void writeFileFromStorage(Long fileId, OutputStream outputStream) {
         Optional<FileInfo> fileInfo = fileRepository.findById(fileId);
-        // нашли файл на диске
         try {
-            File file = new File("/home/sofiana/Desktop/MyBlog/src/main/webapp/WebContent/Images/" + fileInfo.get().getStorageFileName() + "." + fileInfo.get().getType().split("/")[1]);
-            // записали его в ответ
+            File file = new File("/home/sofiana/Desktop/MyBlog/Images/" + fileInfo.get().getStorageName() + "." + fileInfo.get().getType().split("/")[1]);
             Files.copy(file.toPath(), outputStream);
         } catch (IOException e) {
             throw new IllegalArgumentException();

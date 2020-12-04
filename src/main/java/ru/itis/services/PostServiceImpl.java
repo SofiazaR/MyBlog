@@ -15,9 +15,10 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Long savePost(String postText,Long userId, String category, Long fileId) {
+    public Long savePost(String text,String name,Long userId, String category, Long fileId) {
         Post post = Post.builder()
-                .postText(postText)
+                .text(text)
+                .name(name)
                 .userId(userId)
                 .category(category)
                 .fileId(fileId)

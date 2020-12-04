@@ -28,7 +28,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void saveUser(Map<String, String> pool) {
         User user = User.builder()
-                .userName(pool.get("user_name"))
+                .userName(pool.get("name"))
                 .hashPassword(pool.get("hash_password"))
                 .email(pool.get("email"))
                 .age(Integer.parseInt(pool.get("age")))

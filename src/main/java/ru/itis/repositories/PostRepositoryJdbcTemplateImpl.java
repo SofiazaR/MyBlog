@@ -17,15 +17,13 @@ public class PostRepositoryJdbcTemplateImpl implements PostRepository {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
     }
-    private static final String SQL_SELECT_ALL_FROM_POST_BY_USER = "select distinct post.id,data,post_text,user_name,category, storage_file_name,f.type from post\n" +
+    private static final String SQL_SELECT_ALL_FROM_POST_BY_USER = "select distinct post.id,name,data,post_text,user_name,category,file_id from post\n" +
             "join \"user\" on post.user_id = \"user\".id\n" +
-            "join file f on post.file_id = f.id\n" +
             "join post_and_tag pat on post.id = pat.post_id\n" +
             "where user_name = ? order by post.id";
 
-    private static final String SQL_SELECT_ALL_FROM_POST = "select distinct post.id,data,post_text,user_name,category, storage_file_name,f.type from post\n" +
+    private static final String SQL_SELECT_ALL_FROM_POST = "select distinct post.id,name,data,post_text,user_name,category,file_id from post\n" +
             "join \"user\" on post.user_id = \"user\".id\n" +
-            "join file f on post.file_id = f.id\n" +
             "join post_and_tag pat on post.id = pat.post_id\n" +
             "order by post.id";
     //language=sql
@@ -37,12 +35,12 @@ public class PostRepositoryJdbcTemplateImpl implements PostRepository {
 
     private final RowMapper<Post> postRowMapper = (row, rowNumber) -> Post.builder()
             .id(row.getLong("id"))
-            .postText(row.getString("post_text"))
+            .name(row.getString("name"))
+            .text(row.getString("text"))
             .data(row.getDate("data"))
             .userName(row.getString("user_name"))
             .category(row.getString("category"))
-            .fileName(row.getString("storage_file_name"))
-            .type(row.getString("type"))
+            .fileId(row.getLong("file_id"))
             .build();
 
     private final RowMapper<Tag> tagRowMapper = (row, rowNumber) -> Tag.builder()
@@ -58,9 +56,10 @@ public class PostRepositoryJdbcTemplateImpl implements PostRepository {
     }
     private Long savePost(Post post) {
         simpleJdbcInsert.withTableName("post").usingGeneratedKeyColumns("id")
-                .usingColumns("post_text", "user_id", "category", "file_id");
+                .usingColumns("text","name", "user_id", "category", "file_id");
         Map<String, Object> map = new HashMap<>();
-        map.put("post_text", post.getPostText());
+        map.put("name",post.getName());
+        map.put("text", post.getText());
         map.put("user_id", post.getUserId());
         map.put("category", post.getCategory());
         map.put("file_id", post.getFileId());

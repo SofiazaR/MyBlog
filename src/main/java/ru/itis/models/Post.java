@@ -13,14 +13,12 @@ import java.util.Date;
 @ToString
 public class Post {
     private Long id;
-    private String postText;
+    private String name;
+    private String text;
     private Date data;
     private String userName;
     private String category;
     private ArrayList<String> tagsList;
     private Long userId;
     private Long fileId;
-    private String fileName;
-    private String type;
-
 }

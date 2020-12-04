@@ -13,7 +13,7 @@ import java.util.*;
 public class FileRepositoryImpl implements FileRepository {
 
     //language=SQL
-    private final static String SQL_INSERT = "insert into file(storage_file_name, original_file_name, type, size) " +
+    private final static String SQL_INSERT = "insert into file(storage_name, original_name, type, size) " +
             "values (?, ?, ?, ?)";
     private final static String SQL_SELECT_BY_ID = "select * from file where id = ?";
 
@@ -32,8 +32,8 @@ public class FileRepositoryImpl implements FileRepository {
     private final RowMapper<FileInfo> fileRowMapper = (row, rowNumber) ->
             FileInfo.builder()
                     .id(row.getLong("id"))
-                    .originalFileName(row.getString("original_file_name"))
-                    .storageFileName((UUID) row.getObject("storage_file_name"))
+                    .originalName(row.getString("original_name"))
+                    .storageName((UUID) row.getObject("storage_name"))
                     .size(row.getLong("size"))
                     .type(row.getString("type"))
                     .build();
@@ -47,10 +47,10 @@ public class FileRepositoryImpl implements FileRepository {
 
     private Long saveFileInfo(FileInfo fileInfo) {
         simpleJdbcInsert.withTableName("file").usingGeneratedKeyColumns("id")
-                .usingColumns("storage_file_name", "original_file_name", "type", "size");
+                .usingColumns("storage_name", "original_name", "type", "size");
         Map<String, Object> map = new HashMap<>();
-        map.put("storage_file_name", fileInfo.getStorageFileName());
-        map.put("original_file_name", fileInfo.getOriginalFileName());
+        map.put("storage_name", fileInfo.getStorageName());
+        map.put("original_name", fileInfo.getOriginalName());
         map.put("type", fileInfo.getType());
         map.put("size", fileInfo.getSize());
         return Long.parseLong(simpleJdbcInsert.executeAndReturnKey(map).toString());

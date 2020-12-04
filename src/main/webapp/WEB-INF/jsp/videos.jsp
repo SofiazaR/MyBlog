@@ -23,23 +23,19 @@
             </div>
         </div>
     </div>
+
     <div id="page" class="container">
+    <c:forEach items="${videos}" var="video">
         <div class="co-video1">
             <div class="title">
-                <h2>Моя черепаха в молодости</h2>
+                <h2>${video.resume}</h2>
             </div>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/lrLcF2iFYbc" frameborder="0"
+            <iframe width="560" height="315" src="${pageContext.request.contextPath}/file?id=${video.link}" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
         </div>
-        <div class="co-video2">
-            <div class="title">
-                <h2>Рассказываю про Bucket sort</h2>
-            </div>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/DpZfzY55xiA" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
-        </div>
+    </c:forEach>
     </div>
+
 </div>
 <jsp:include page="views/_footer.jsp"/>

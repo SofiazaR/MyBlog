@@ -17,24 +17,24 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class PostDto {
     private Long id;
-    private String postText;
+    private String name;
+    private String text;
     private Date data;
     private String userName;
     private String category;
     private List<String> tagsList;
-    private String file_name;
-    private String type;
+    private Long fileId;
 
     public static PostDto from(Post post) {
         return PostDto.builder()
                 .id(post.getId())
                 .userName(post.getUserName())
-                .postText(post.getPostText())
-                .file_name(post.getFileName())
+                .text(post.getText())
+                .name(post.getName())
                 .data(post.getData())
                 .category(post.getCategory())
                 .tagsList(post.getTagsList())
-                .type(post.getType().substring(post.getType().indexOf("/")+1))
+                .fileId(post.getFileId())
                 .build();
     }
 

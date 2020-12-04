@@ -12,14 +12,14 @@ import java.util.Optional;
 public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private JdbcTemplate jdbcTemplate;
     //language=sql
-    private static final String SQL_INSERT = "INSERT INTO \"user\" (user_name, age, email, hash_password) values (?,?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO \"user\" (name, age, email, hash_password) values (?,?,?,?)";
     private static final String SQL_SELECT_BY_EMAIL = "Select * from \"user\" where email=?";
     private static final String SQL_SELECT_BY_ID = "select * from \"user\" where id=?";
     private static final String SQL_CHANGE_PASSWORD_BY_ID = "update \"user\" set hash_password=? where id=?";
 
     private final RowMapper<User> userRowMapper = (row, rowNumber) -> User.builder()
             .id(row.getLong("id"))
-            .userName(row.getString("user_name"))
+            .userName(row.getString("name"))
             .email(row.getString("email"))
             .hashPassword(row.getString("hash_password"))
             .age(row.getInt("age"))

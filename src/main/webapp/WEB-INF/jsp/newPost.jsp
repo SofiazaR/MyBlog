@@ -20,10 +20,16 @@
 <jsp:include page="views/_navbar.jsp"></jsp:include>
 
 <form action="${pageContext.request.contextPath}/newPost" enctype="multipart/form-data" method="post">
-    <input type="text" name="post_text">
-    <input type="text" name="tags" placeholder="Введите тег в формате #тег <br> Напимер: #food">
+    <input type="text" name="text" placeholder="Введите текст поста ">
+    <input type="text" name="name" placeholder="Введите заголовок ">
+    <input type="text" name="tags" placeholder="Введите тег в формате #тег">
     <input type="text" name="category" placeholder="Введите категорию">
     <input type="file" name="photo" multiple accept="image/*,image/jpeg" placeholder="photo">
+    <button type="submit" value="send">send</button>
+</form>
+<form action="${pageContext.request.contextPath}/newPost"  method="video">
+    <input type="text" name="resume" placeholder="Введите заголовок">
+    <input type="text" name="link" placeholder="Введите ссылку на видео">
     <button type="submit" value="send">send</button>
 </form>
 

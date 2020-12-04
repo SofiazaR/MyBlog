@@ -13,8 +13,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class FileInfo {
     private Long id;
-    private String originalFileName;
-    private UUID storageFileName;
+    private String originalName;
+    private UUID storageName;
     private Long size;
     private String type;
 }
