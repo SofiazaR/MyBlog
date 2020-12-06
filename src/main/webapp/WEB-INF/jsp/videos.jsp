@@ -14,6 +14,7 @@
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 <body>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="views/_navbar.jsp"></jsp:include>
 <div id="wrapper">
     <div id="header-wrapper-videos">
@@ -25,16 +26,17 @@
     </div>
 
     <div id="page" class="container">
-    <c:forEach items="${videos}" var="video">
-        <div class="co-video1">
-            <div class="title">
-                <h2>${video.resume}</h2>
+        <jsp:useBean id="videos" scope="request" type="java.util.List"/>
+        <c:forEach items="${videos}" var="video">
+            <div class="co-video1">
+                <div class="title">
+                    <h2>${video.resume}</h2>
+                </div>
+                <iframe width="560" height="315" src="${video.link}" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
             </div>
-            <iframe width="560" height="315" src="${pageContext.request.contextPath}/file?id=${video.link}" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
-        </div>
-    </c:forEach>
+        </c:forEach>
     </div>
 
 </div>

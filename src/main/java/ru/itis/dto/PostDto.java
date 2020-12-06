@@ -29,8 +29,8 @@ public class PostDto {
         return PostDto.builder()
                 .id(post.getId())
                 .userName(post.getUserName())
-                .text(post.getText())
                 .name(post.getName())
+                .text(post.getText())
                 .data(post.getData())
                 .category(post.getCategory())
                 .tagsList(post.getTagsList())
@@ -38,7 +38,7 @@ public class PostDto {
                 .build();
     }
 
-    public static List<PostDto> from(List<Post> cars) {
-        return cars.stream().map(PostDto::from).collect(Collectors.toList());
+    public static List<PostDto> from(List<Post> posts) {
+        return posts.stream().map(PostDto::from).collect(Collectors.toList());
     }
 }

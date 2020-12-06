@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
-<body>>
+<body>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="views/_navbar.jsp"></jsp:include>
 <jsp:useBean id="posts" scope="request" type="java.util.List"/>
@@ -29,11 +29,11 @@
     <c:forEach items="${posts}" var="post">
         <div class="column1">
             <div class="title">
-                <h2>${post.id}</h2>
                 <h2>${post.data}</h2>
-                <h2>${post.userName}</h2>
+                <h2>${post.name}</h2>
+                <p>${post.userName}</p>
             </div>
-            <p class="mytext">${post.postText}</p>
+            <p class="mytext">${post.text}</p>
             <img src="${pageContext.request.contextPath}/file?id=${post.fileId}" width="270" height="270" alt="img">
         </div>
     </c:forEach>
@@ -48,8 +48,8 @@
         let len = posts.length;
         for (let i = 0; i < len; i++) {
             let post = posts[i];
-            let {postText} = post;
-            let {id} = post;
+            let {text} = post;
+            let {name} = post;
             let {data} = post;
             var date = new Date(data);
             let format = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
@@ -57,11 +57,11 @@
             let {fileId} = post;
             textCOM += " <div class=\"column1\">\n" +
                 "            <div class=\"title\">\n" +
-                "                <h2>"+id+"</h2>\n" +
                 "                <h2>"+format+"</h2>\n" +
-                "                <h2>"+userName+"</h2>\n" +
+                "                <h2>"+name+"</h2>\n" +
+                "                <p>"+userName+"</p>\n" +
                 "            </div>\n" +
-                "            <p class=\"mytext\">"+postText+"</p>\n" +
+                "            <p class=\"mytext\">"+text+"</p>\n" +
                 "            <img src=\"/file?id="+fileId+"\""+"width=\"270\" height=\"270\" alt=\"img\">\n" +
                 "        </div>" ;
         }

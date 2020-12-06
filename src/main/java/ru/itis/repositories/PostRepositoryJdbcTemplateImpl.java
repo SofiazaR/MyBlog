@@ -1,5 +1,6 @@
 package ru.itis.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -12,25 +13,27 @@ import java.util.*;
 public class PostRepositoryJdbcTemplateImpl implements PostRepository {
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private SimpleJdbcInsert simpleJdbcInsert;
+
 
     public PostRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-        this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
     }
-    private static final String SQL_SELECT_ALL_FROM_POST_BY_USER = "select distinct post.id,name,data,post_text,user_name,category,file_id from post\n" +
+    private static final String SQL_SELECT_ALL_FROM_POST_BY_USER = "select distinct post.id,post.name,data,text,\"user\".name t,category,file_id from post\n" +
             "join \"user\" on post.user_id = \"user\".id\n" +
             "join post_and_tag pat on post.id = pat.post_id\n" +
-            "where user_name = ? order by post.id";
+            "where \"user\".name = ? order by post.id";
 
-    private static final String SQL_SELECT_ALL_FROM_POST = "select distinct post.id,name,data,post_text,user_name,category,file_id from post\n" +
+    private static final String SQL_SELECT_ALL_FROM_POST = "select distinct post.id,post.name,data,text,\"user\".name t,category,file_id from post\n" +
             "join \"user\" on post.user_id = \"user\".id\n" +
             "join post_and_tag pat on post.id = pat.post_id\n" +
             "order by post.id";
     //language=sql
-    private static final String SQL_SELECT_ALL_FROM_TAG = "select post_id, tag from post_and_tag\n" +
+    private static final String SQL_SELECT_ALL_FROM_TAG = "select id, tag from post_and_tag\n" +
             "join tag t on t.id = post_and_tag.tag_id";
 
-    private SimpleJdbcInsert simpleJdbcInsert;
+
 
 
     private final RowMapper<Post> postRowMapper = (row, rowNumber) -> Post.builder()
@@ -38,13 +41,13 @@ public class PostRepositoryJdbcTemplateImpl implements PostRepository {
             .name(row.getString("name"))
             .text(row.getString("text"))
             .data(row.getDate("data"))
-            .userName(row.getString("user_name"))
+            .userName(row.getString("t"))
             .category(row.getString("category"))
             .fileId(row.getLong("file_id"))
             .build();
 
-    private final RowMapper<Tag> tagRowMapper = (row, rowNumber) -> Tag.builder()
-            .postId(row.getLong("post_id"))
+    private final RowMapper<Tag> tagsRowMapper = (row, rowNumber) -> Tag.builder()
+            .postId(row.getLong("id"))
             .tag(row.getString("tag"))
             .build();
 
@@ -83,7 +86,7 @@ public class PostRepositoryJdbcTemplateImpl implements PostRepository {
 
     @Override
     public ArrayList<Post> findAll() {
-        List<Tag> tags = jdbcTemplate.query(SQL_SELECT_ALL_FROM_TAG, tagRowMapper);
+        List<Tag> tags = jdbcTemplate.query(SQL_SELECT_ALL_FROM_TAG, tagsRowMapper);
 
         Map<Long, ArrayList<String>> postTags = new HashMap<>();
 
@@ -105,7 +108,7 @@ public class PostRepositoryJdbcTemplateImpl implements PostRepository {
 
     @Override
     public List<Post> findAllByUser(String user) {
-        List<Tag> tags = jdbcTemplate.query(SQL_SELECT_ALL_FROM_TAG, tagRowMapper);
+        List<Tag> tags = jdbcTemplate.query(SQL_SELECT_ALL_FROM_TAG, tagsRowMapper);
 
         Map<Long, ArrayList<String>> postTags = new HashMap<>();
 

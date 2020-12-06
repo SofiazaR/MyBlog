@@ -1,10 +1,11 @@
 package ru.itis.services;
 
-import ru.itis.dto.PostDto;
+import ru.itis.dto.VideoDto;
 
 import java.util.ArrayList;
 
 public interface VideosService{
-    Long saveVideo(String resume,String link);
-    ArrayList<VideoDto> findAll();
+    void saveVideo(String resume,String link);
+    ArrayList<VideoDto> findAllVideos();
+
 }

@@ -24,7 +24,6 @@ public class FileRepositoryImpl implements FileRepository {
 
     public FileRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-
     }
 
 

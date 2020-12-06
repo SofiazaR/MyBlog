@@ -27,7 +27,7 @@
     <input type="file" name="photo" multiple accept="image/*,image/jpeg" placeholder="photo">
     <button type="submit" value="send">send</button>
 </form>
-<form action="${pageContext.request.contextPath}/newPost"  method="video">
+<form action="${pageContext.request.contextPath}/videos"  method="post">
     <input type="text" name="resume" placeholder="Введите заголовок">
     <input type="text" name="link" placeholder="Введите ссылку на видео">
     <button type="submit" value="send">send</button>

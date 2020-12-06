@@ -57,6 +57,6 @@ public class NewPostServlet extends HttpServlet {
 
         tagService.saveTag(postId, req.getParameter("tags"));
 
-        resp.sendRedirect("/newPost");
+        resp.sendRedirect("/posts");
     }
 }

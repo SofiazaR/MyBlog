@@ -10,11 +10,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Component;
 import ru.itis.repositories.*;
 import ru.itis.services.*;
 
 import javax.sql.DataSource;
-
+@Component
 @Configuration
 @PropertySource("classpath:db.properties")
 @ComponentScan(basePackages = "ru.itis")
@@ -33,6 +34,7 @@ public class ApplicationConfig {
     public TagService tagService() {
         return new TagServiceImpl(tagRepository());
     }
+
 
     @Bean
     public SimpleJdbcInsert simpleJdbcInsert() {

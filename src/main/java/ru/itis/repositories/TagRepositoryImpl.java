@@ -1,5 +1,6 @@
 package ru.itis.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,12 +21,12 @@ public class TagRepositoryImpl implements TagRepository {
     private static final String SQL_INSERT_POST_AND_TAG = "insert into post_and_tag values(?,?)";
 
     private JdbcTemplate jdbcTemplate;
-
+@Autowired
     private SimpleJdbcInsert simpleJdbcInsert;
 
     public TagRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-       this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+
     }
 
     private final RowMapper<Tag> tagRowMapper = (row, rowNumber) -> Tag.builder()
