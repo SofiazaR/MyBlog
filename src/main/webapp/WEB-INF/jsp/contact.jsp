@@ -24,4 +24,13 @@
         </div>
     </div>
 </div>
+<div id="page" class="container">
+        <div class="column1">
+            <div class="title">
+                <h3>Для рекламных предложений:</h3>
+                <p>Email: Razuvalovasofa@gmail.com</p>
+            </div>
+        </div>
+</div>
+
 <jsp:include page="views/_footer.jsp"/>

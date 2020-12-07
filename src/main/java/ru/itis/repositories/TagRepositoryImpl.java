@@ -5,6 +5,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 import ru.itis.models.Tag;
 
 import javax.sql.DataSource;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
+@Repository
 public class TagRepositoryImpl implements TagRepository {
 
     //language=sql
@@ -21,12 +22,19 @@ public class TagRepositoryImpl implements TagRepository {
     private static final String SQL_INSERT_POST_AND_TAG = "insert into post_and_tag values(?,?)";
 
     private JdbcTemplate jdbcTemplate;
-@Autowired
     private SimpleJdbcInsert simpleJdbcInsert;
 
     public TagRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
 
+    }
+
+    @Autowired
+    public void TagRepositorySimpleJdbcInsert(DataSource dataSource) {
+        simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
+                .withTableName("tag")
+                .usingGeneratedKeyColumns("id")
+                .usingColumns("tag");
     }
 
     private final RowMapper<Tag> tagRowMapper = (row, rowNumber) -> Tag.builder()
@@ -47,8 +55,6 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     private Long saveTag(Tag tag) {
-        simpleJdbcInsert.withTableName("tag").usingGeneratedKeyColumns("id")
-                .usingColumns("tag");
         Map<String, Object> map = new HashMap<>();
         map.put("tag", tag.getTag());
         return Long.parseLong(simpleJdbcInsert.executeAndReturnKey(map).toString());

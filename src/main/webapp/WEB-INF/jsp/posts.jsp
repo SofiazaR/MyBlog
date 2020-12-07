@@ -20,7 +20,7 @@
 
 <form id="MyForm">
     <h5>Search </h5>
-    <input id="comment" type="text" name="tags" placeholder="Введите тег в формате #тег">
+    <input id="comment" type="text" name="tags" placeholder="Введите имя пользователя">
     <div class="btn btn-secondary" onclick="sendComment()">submit</div>
 
 </form>

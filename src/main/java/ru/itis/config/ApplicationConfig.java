@@ -35,12 +35,6 @@ public class ApplicationConfig {
         return new TagServiceImpl(tagRepository());
     }
 
-
-    @Bean
-    public SimpleJdbcInsert simpleJdbcInsert() {
-        return new SimpleJdbcInsert(dataSource());
-    }
-
     @Bean
     public UsersService usersService() {
         return new UsersServiceImpl(usersRepository());

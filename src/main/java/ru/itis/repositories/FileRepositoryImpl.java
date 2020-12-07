@@ -5,11 +5,13 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 import ru.itis.models.FileInfo;
 
 import javax.sql.DataSource;
 import java.util.*;
 
+@Repository
 public class FileRepositoryImpl implements FileRepository {
 
     //language=SQL
@@ -18,15 +20,19 @@ public class FileRepositoryImpl implements FileRepository {
     private final static String SQL_SELECT_BY_ID = "select * from file where id = ?";
 
     private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     private SimpleJdbcInsert simpleJdbcInsert;
 
     public FileRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-
+    @Autowired
+    public void FileRepositorySimpleJdbcInsert(DataSource dataSource) {
+        simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
+                .withTableName("file")
+                .usingGeneratedKeyColumns("id")
+                .usingColumns("storage_name", "original_name", "type", "size");
+    }
 
     private final RowMapper<FileInfo> fileRowMapper = (row, rowNumber) ->
             FileInfo.builder()
@@ -45,8 +51,6 @@ public class FileRepositoryImpl implements FileRepository {
     }
 
     private Long saveFileInfo(FileInfo fileInfo) {
-        simpleJdbcInsert.withTableName("file").usingGeneratedKeyColumns("id")
-                .usingColumns("storage_name", "original_name", "type", "size");
         Map<String, Object> map = new HashMap<>();
         map.put("storage_name", fileInfo.getStorageName());
         map.put("original_name", fileInfo.getOriginalName());
@@ -57,7 +61,7 @@ public class FileRepositoryImpl implements FileRepository {
 
     @Override
     public void update(FileInfo entity) {
-        
+
     }
 
     @Override

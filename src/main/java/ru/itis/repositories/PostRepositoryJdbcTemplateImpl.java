@@ -4,22 +4,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 import ru.itis.models.Post;
 import ru.itis.models.Tag;
 
 import javax.sql.DataSource;
 import java.util.*;
 
+@Repository
 public class PostRepositoryJdbcTemplateImpl implements PostRepository {
     private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     private SimpleJdbcInsert simpleJdbcInsert;
 
+    @Autowired
+    public void PostRepositorySimpleJdbcInsert(DataSource dataSource) {
+        simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
+                .withTableName("post")
+                .usingGeneratedKeyColumns("id")
+                .usingColumns("text", "name", "user_id", "category", "file_id");
+
+    }
 
     public PostRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
+
     private static final String SQL_SELECT_ALL_FROM_POST_BY_USER = "select distinct post.id,post.name,data,text,\"user\".name t,category,file_id from post\n" +
             "join \"user\" on post.user_id = \"user\".id\n" +
             "join post_and_tag pat on post.id = pat.post_id\n" +
@@ -32,8 +41,6 @@ public class PostRepositoryJdbcTemplateImpl implements PostRepository {
     //language=sql
     private static final String SQL_SELECT_ALL_FROM_TAG = "select id, tag from post_and_tag\n" +
             "join tag t on t.id = post_and_tag.tag_id";
-
-
 
 
     private final RowMapper<Post> postRowMapper = (row, rowNumber) -> Post.builder()
@@ -57,11 +64,10 @@ public class PostRepositoryJdbcTemplateImpl implements PostRepository {
         Long fileId = savePost(entity);
         entity.setId(fileId);
     }
+
     private Long savePost(Post post) {
-        simpleJdbcInsert.withTableName("post").usingGeneratedKeyColumns("id")
-                .usingColumns("text","name", "user_id", "category", "file_id");
         Map<String, Object> map = new HashMap<>();
-        map.put("name",post.getName());
+        map.put("name", post.getName());
         map.put("text", post.getText());
         map.put("user_id", post.getUserId());
         map.put("category", post.getCategory());
